@@ -10,4 +10,13 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function notification($message, $alertType = 'info', $title = '')
+    {
+        return [
+            'message' => $message,
+            'alert_type' => $alertType,
+            'title' => $title
+        ];
+    }
 }

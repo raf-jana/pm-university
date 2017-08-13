@@ -120,7 +120,7 @@
                     <li>
                         <a class="{{class_active_post($key)}}" href="{{$post->slug}}">
                             <div>
-                                <img src="{{asset($post->imagePath())}}"
+                                <img src="{{$post->imageUrl()}}"
                                      alt="{{$post->title}}"
                                      class="s-list-icon"/>
                             </div>
@@ -148,7 +148,7 @@
                             <a href="{{ $hok->link }}" target="_blank">
                                 <div class="k-list-item">
                                     <div class="list-image">
-                                        <img src="{{asset($hok->imagePath())}}"/>
+                                        <img src="{{asset($hok->imageUrl())}}"/>
                                     </div>
                                     <div class="list-desc">
                                         <div class="list-desc-details">
@@ -179,7 +179,7 @@
                 @foreach($placements as $placement)
                     <div class="media">
                         <div class="pull-left">
-                            <img src="{{asset($placement->imagePath())}}"/>
+                            <img src="{{asset($placement->imageUrl())}}"/>
                         </div>
                         <div class="media-body">
                             <h4 class="p-list-header">{{ $placement->title }}</h4>

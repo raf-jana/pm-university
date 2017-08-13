@@ -2,18 +2,17 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Traits\HasSlug;
-use App\Traits\Publishable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Post extends Model
+class Post extends BaseModel
 {
-    use HasSlug, Publishable;
+    use HasSlug;
 
-    const BACHELORE = 1;
-    const MASTER = 2;
-    const SPECIALIZATION = 3;
+    const BACHELORE = 'bachelore';
+    const MASTER = 'master';
+    const SPECIALIZATION = 'specialization';
 
     /**
      * Don't auto-apply mass assignment protection.
@@ -25,6 +24,21 @@ class Post extends Model
     protected $casts = [
         'published_at' => 'datetime',
     ];
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($complaint) {
+            $complaint->user_id = $complaint->last_user_id = auth()->user()->id;
+            $complaint->published_at = Carbon::now();
+        });
+    }
 
     public function scopeFilterByType($query, $type)
     {
@@ -39,6 +53,31 @@ class Post extends Model
     public function articles(): HasMany
     {
         return $this->hasMany(Article::class);
+    }
+
+    public function topTenArticles(): HasMany
+    {
+        return $this->articles()->where('type', Article::TOP_TEN);
+    }
+
+    public function toolsArticles(): HasMany
+    {
+        return $this->articles()->where('type', Article::TOOLS);
+    }
+
+    public function videosArticles(): HasMany
+    {
+        return $this->articles()->where('type', Article::VIDEOS);
+    }
+
+    public function interviewsArticles(): HasMany
+    {
+        return $this->articles()->where('type', Article::INTERVIES);
+    }
+
+    public function booksArticles(): HasMany
+    {
+        return $this->articles()->where('type', Article::BOOKS);
     }
 
     /**
@@ -61,15 +100,9 @@ class Post extends Model
         return $this->slug;
     }
 
-    public function imagePath(): string
-    {
-        $picture = $this->picture ?? '01-Analytics.png';
-        return 'images/posts/' . $picture;
-    }
-
     public static function defaultAttributes($overrides = [])
     {
-        return array_merge(['title', 'summary', 'slug'], $overrides);
+        return array_merge(['id', 'title', 'type', 'summary', 'slug', 'picture'], $overrides);
     }
 
     public static function nextRecord($currentRecord)
@@ -97,6 +130,16 @@ class Post extends Model
                 ->orderBy('id', 'desc')
                 ->first();
         return $previous;
+    }
+
+    /**
+     * Get the number of favorites for the reply.
+     *
+     * @return integer
+     */
+    public function getTopTenCountAttribute()
+    {
+        return $this->articles()->where('type', Article::TOP_TEN)->count();
     }
 
 }

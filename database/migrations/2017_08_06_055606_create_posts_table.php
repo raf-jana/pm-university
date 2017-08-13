@@ -15,7 +15,7 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedMediumInteger('type')
+            $table->string('type', 50)
                 ->default(\App\Models\Post::BACHELORE);
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('last_user_id');

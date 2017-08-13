@@ -24,7 +24,7 @@ trait HasSlug
         $slug = $originalSlug = str_slug($value);
         $counter = 0;
 
-        while ($this->slugExists($slug, $this->exists ? $this->id() : null)) {
+        while ($this->slugExists($slug, $this->exists ? $this->id : null)) {
             $counter++;
             $slug = $originalSlug . '-' . $counter;
         }

@@ -2,20 +2,33 @@
 
 namespace App\Models;
 
-use App\Traits\Publishable;
-use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
-class Placement extends Model
+class Placement extends BaseModel
 {
-    use Publishable;
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [];
 
-    public function imagePath(): string
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    public static function boot()
     {
-        return 'images/placements/' . $this->picture;
+        parent::boot();
+
+        static::creating(function ($complaint) {
+            $complaint->published_at = Carbon::now();
+        });
     }
 
     public static function defaultAttributes($overrides = [])
     {
-        return array_merge(['title', 'summary', 'picture', 'link'], $overrides);
+        return array_merge(['id', 'title', 'summary', 'picture', 'link'], $overrides);
     }
 }

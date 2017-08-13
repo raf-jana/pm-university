@@ -2,14 +2,10 @@
 
 namespace App\Models;
 
-use App\Traits\Publishable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Article extends Model
+class Article extends BaseModel
 {
-    use Publishable;
-
     const TOP_TEN = 'top-10';
     const VIDEOS = 'videos';
     const BOOKS = 'books';
@@ -40,7 +36,7 @@ class Article extends Model
     public static function defaultAttributes($overrides = [])
     {
         return array_merge(
-            ['title', 'description', 'source_url', 'picture', 'video_url', 'published_at'],
+            ['id', 'title', 'description', 'source_url', 'picture', 'video_url', 'published_at'],
             $overrides);
     }
 

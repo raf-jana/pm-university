@@ -22,7 +22,8 @@
             "database"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Janaagraha\\Sanitizer\\": "packages/janaagraha/sanitizer/src/"
         },
         "files": [
             "app/helpers.php",

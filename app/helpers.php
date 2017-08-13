@@ -100,3 +100,19 @@ if (!function_exists('make_youtube_url')) {
     }
 }
 
+if (!function_exists('activeLabelClass')) {
+
+    function activeLabelClass($value)
+    {
+        return $value ? 'primary' : 'danger';
+    }
+}
+
+if (!function_exists('activeLabelText')) {
+
+    function activeLabelText($value)
+    {
+        return $value ? 'Enable' : 'Disabled';
+    }
+}
+

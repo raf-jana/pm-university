@@ -2,22 +2,35 @@
 
 namespace App\Models;
 
-use App\Traits\Publishable;
-use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
-class HallsOfKnowledge extends Model
+class HallsOfKnowledge extends BaseModel
 {
-    use Publishable;
-
     protected $table = 'halls_of_knowledge';
 
-    public function imagePath(): string
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [];
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    public static function boot()
     {
-        return 'images/hok/' . $this->picture;
+        parent::boot();
+
+        static::creating(function ($complaint) {
+            $complaint->published_at = Carbon::now();
+        });
     }
 
     public static function defaultAttributes($overrides = [])
     {
-        return array_merge(['title', 'picture', 'link'], $overrides);
+        return array_merge(['id', 'title', 'picture', 'link'], $overrides);
     }
 }
