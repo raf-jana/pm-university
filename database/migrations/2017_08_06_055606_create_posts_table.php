@@ -17,8 +17,8 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->string('type', 50)
                 ->default(\App\Models\Post::BACHELORE);
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('last_user_id');
+            $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedInteger('last_user_id')->nullable();
             $table->string('title')->nullable();
             $table->string('slug')->nullable();
             $table->mediumText('summary')->nullable();

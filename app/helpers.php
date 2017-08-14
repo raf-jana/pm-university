@@ -116,3 +116,13 @@ if (!function_exists('activeLabelText')) {
     }
 }
 
+if (!function_exists('me')) {
+    /**
+     * Get logged in user
+     */
+    function me()
+    {
+        return auth()->user();
+    }
+}
+

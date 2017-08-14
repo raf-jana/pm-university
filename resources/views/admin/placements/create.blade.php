@@ -14,7 +14,7 @@
                     <div class="ibox-tools">
                         <h5>Add A Placement
                         </h5>
-                        <a href="{{ route('placements') }}" class="btn btn-primary btn-xs">List</a>
+                        <a href="{{ route('placements') }}" class="btn btn-primary btn-xs">Back To List</a>
                     </div>
                 </div>
                 <div class="ibox-content">

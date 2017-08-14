@@ -6,13 +6,19 @@ trait CarbonDates
 {
     public function parseCarbonObject($carbonObj)
     {
-        return \Carbon::parse($carbonObj);
+        return \Carbon\Carbon::parse($carbonObj);
     }
 
     public function postedAgo(): string
     {
         return $this->parseCarbonObject($this->created_at)
             ->diffForHumans();
+    }
+
+    public function postedDate(): string
+    {
+        return $this->parseCarbonObject($this->created_at)
+            ->toDateString();
     }
 
     public function updatedAgo(): string

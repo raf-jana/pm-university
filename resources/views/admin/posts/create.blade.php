@@ -19,7 +19,7 @@
                     <div class="ibox-tools">
                         <h5>Add A Post
                         </h5>
-                        <a href="{{ route('posts') }}" class="btn btn-primary btn-xs">List</a>
+                        <a href="{{ route('posts') }}" class="btn btn-primary btn-xs">Back To List</a>
                     </div>
                 </div>
                 <div class="ibox-content">

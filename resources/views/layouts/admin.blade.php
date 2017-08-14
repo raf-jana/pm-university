@@ -24,7 +24,7 @@
     @include('admin.includes._sidebar')
     <div id="page-wrapper" class="gray-bg">
         @include('admin.includes._static_top')
-        @include('admin.includes._breadcrumbs')
+        {{--@include('admin.includes._breadcrumbs')--}}
         <div class="wrapper wrapper-content animated fadeInRight ecommerce">
             @yield('content')
         </div>

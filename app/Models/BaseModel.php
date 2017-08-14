@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class BaseModel extends Model
 {
     use Publishable;
-    
+
     public function scopeRecent($query)
     {
         return $query->orderBy('published_at', 'desc');

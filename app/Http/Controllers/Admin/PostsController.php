@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Post;
+use App\Filters\PostFilters;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -11,14 +12,20 @@ class PostsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
+     * @param PostFilters $filters
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, PostFilters $filters)
     {
-        $posts = Post::recent()->withCount(
-            ['topTenArticles', 'videosArticles', 'interviewsArticles', 'booksArticles', 'toolsArticles'])
-            ->paginate(15, Post::defaultAttributes(['created_at', 'published_at']));
-        return view('admin.posts.index', compact('posts'));
+        \DB::enableQueryLog();
+        $posts = $this->getPosts($filters);
+        $totalPosts = $posts->total();
+        //dd(\DB::getQueryLog());
+        $posts->withPath(request()->getUri());
+        $latestPost = Post::latest()->first();
+        $oldestPost = Post::oldest()->first();
+        return view('admin.posts.index', compact('posts', 'totalPosts', 'latestPost', 'oldestPost'));
     }
 
     /**
@@ -88,6 +95,41 @@ class PostsController extends Controller
         $post->articles->each->unpublish();
         $notification = $this->notification('Deleted successfully', 'success');
         return redirect(route('posts'))->with($notification);
+    }
+
+    public function bulkAction(Request $request)
+    {
+        $action = $request->get('action_type');
+        $ids = $request->get('post');
+        $notification = $this->notification(ucfirst($action) . 'ed successfully', 'success');
+
+        foreach ($ids as $id) {
+            $post = Post::find($id);
+            $method = $action === 'publish' ? 'publish' : 'unpublish';
+            $post->{$method}();
+            $post->articles->each->{$method}();
+        }
+        return redirect(route('posts'))->with($notification);
+    }
+
+    /**
+     * Fetch all relevant threads.
+     *
+     * @param PostFilters $filters
+     * @return mixed
+     */
+    protected function getPosts(PostFilters $filters)
+    {
+        $posts = Post::recent()->filter($filters);
+        return $posts->withCount(
+            [
+                'topTenArticles',
+                'videosArticles',
+                'interviewsArticles',
+                'booksArticles',
+                'toolsArticles'
+            ])
+            ->paginate(15, Post::defaultAttributes(['created_at', 'published_at']));
     }
 
     private function _validateInput()

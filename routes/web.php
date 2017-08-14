@@ -26,8 +26,8 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 // Admin dashboard
 Route::middleware('auth')->prefix('admin')->namespace('Admin')->group(function () {
-    Route::get('/', 'DashboardController@index')->name('dashboard');
-    Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+    Route::get('/', 'PostsController@index')->name('dashboard');
+    Route::get('dashboard', 'PostsController@index')->name('dashboard');
     Route::resource('placements', 'PlacementsController', ['names' => [
         'index' => 'placements',
         'create' => 'placements.create',
@@ -52,8 +52,11 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->group(function (
         'update' => 'posts.update',
         'destroy' => 'posts.delete'
     ]]);
+    // Posts - bulk delete, publish
+    Route::post('/posts/bulk-actions', 'PostsController@bulkAction')->name('posts.actions');
+    // Article routes
     Route::get('/posts/{id}/articles', 'PostArticlesController@index')->name('posts.articles');
-    Route::get('/posts/{id}/articles/new', 'PostArticlesController@create')->name('posts.articles.edit');
+    Route::get('/posts/{id}/articles/new', 'PostArticlesController@create')->name('posts.articles.create');
     Route::delete('/articles/{id}', 'PostArticlesController@destroy');
 });
 

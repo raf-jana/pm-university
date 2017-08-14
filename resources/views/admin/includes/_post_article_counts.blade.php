@@ -9,7 +9,7 @@
         <a href="#">Interviews:{{$post->interviews_articles_count}}</a>
     </li>
     <li>
-        <a href="#">Books:{{$post->books_count}}</a>
+        <a href="#">Books:{{$post->books_articles_count}}</a>
     </li>
     <li>
         <a href="#">Videos:{{$post->videos_articles_count}}</a>

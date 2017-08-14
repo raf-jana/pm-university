@@ -23,8 +23,8 @@ class CreateArticlesTable extends Migration
             $table->longText('description')->nullable();
             $table->string('picture', 255)->nullable();
             $table->string('video_url')->nullable();
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('last_user_id');
+            $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedInteger('last_user_id')->nullable();
             $table->dateTime('published_at')->nullable()->index();
             $table->timestamps();
 

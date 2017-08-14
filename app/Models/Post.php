@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use App\Traits\HasSlug;
+use App\Filters\PostFilters;
+use App\Traits\Models\CarbonDates;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Post extends BaseModel
 {
-    use HasSlug;
+    use HasSlug, CarbonDates;
 
     const BACHELORE = 'bachelore';
     const MASTER = 'master';
@@ -35,7 +37,8 @@ class Post extends BaseModel
         parent::boot();
 
         static::creating(function ($complaint) {
-            $complaint->user_id = $complaint->last_user_id = auth()->user()->id;
+            $userId = me() ? me()->id : null;
+            $complaint->user_id = $complaint->last_user_id = $userId;
             $complaint->published_at = Carbon::now();
         });
     }
@@ -43,6 +46,18 @@ class Post extends BaseModel
     public function scopeFilterByType($query, $type)
     {
         return $query->latest()->where('type', $type);
+    }
+
+    /**
+     * Apply all relevant post filters.
+     *
+     * @param  Builder $query
+     * @param  PostFilters $filters
+     * @return Builder
+     */
+    public function scopeFilter($query, PostFilters $filters)
+    {
+        return $filters->apply($query);
     }
 
     /**

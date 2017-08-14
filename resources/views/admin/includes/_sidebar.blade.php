@@ -11,10 +11,7 @@
                              </span> <span class="text-muted text-xs block">Art Director <b
                                             class="caret"></b></span> </span> </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="profile.html">Profile</a></li>
-                        <li><a href="contacts.html">Contacts</a></li>
-                        <li><a href="mailbox.html">Mailbox</a></li>
-                        <li class="divider"></li>
+                        <li><a href="#">Profile</a></li>
                         <li><a href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">Logout</a>
@@ -44,12 +41,13 @@
                             class="nav-label">Halls Of Knowledge</span></a>
             </li>
             <li>
-                <a href="{{ route('posts') }}"><i class="fa fa-edit"></i> <span class="nav-label">Posts</span><span
+                <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Posts</span><span
                             class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="{{ route('posts') }}">Bachelore</a></li>
-                    <li><a href="{{ route('posts') }}">Master</a></li>
-                    <li><a href="{{ route('posts') }}">Specialization</a></li>
+                    <li><a href="{{ route('posts') }}">All Posts</a></li>
+                    <li><a href="{{ route('posts') }}?type=bachelore">Bachelore</a></li>
+                    <li><a href="{{ route('posts') }}?type=master">Master</a></li>
+                    <li><a href="{{ route('posts') }}?type=specialization">Specialization</a></li>
                 </ul>
             </li>
         </ul>
