@@ -1,0 +1,14 @@
+{
+    "name": "janaagraha/sanitizer",
+    "description": "Data sanitizer and Laravel form requests with input sanitation.",
+    "type": "laravel",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nageswara Rao",
+            "email": "nag.samayam@gmail.com"
+        }
+    ],
+    "require": {},
+	"minimum-stability": "dev"
+}
