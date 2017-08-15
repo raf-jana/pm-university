@@ -199,14 +199,10 @@
     <!--//PLACEMENTS-->
 
     <!--Footer-->
-    @include('_footer')
+    @include('includes._footer')
             <!--//Footer-->
 
-    <!--Copy Rights-->
-    <div class="copyrights">
-        <p>© Looptabs | All rights reserved</p>
-    </div>
-    <!--//Copy Rights-->
+    @include('includes._copy_rights')
 </div>
 
 @yield('before_scripts')
@@ -265,7 +261,7 @@
     });
 </script>
 <!-- GA script -->
-@include('_ga')
+@include('includes._ga')
         <!-- //GA script -->
 
 @yield('after_scripts')

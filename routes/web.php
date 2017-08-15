@@ -56,8 +56,13 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->group(function (
     Route::post('/posts/bulk-actions', 'PostsController@bulkAction')->name('posts.actions');
     // Article routes
     Route::get('/posts/{id}/articles', 'PostArticlesController@index')->name('posts.articles');
-    Route::get('/posts/{id}/articles/new', 'PostArticlesController@create')->name('posts.articles.create');
+    Route::get('/posts/{id}/articles/create', 'PostArticlesController@create')->name('posts.articles.create');
+    Route::post('/posts/{id}/articles/store', 'PostArticlesController@store')->name('posts.articles.store');
+    Route::get('/posts/{postId}/articles/{id}/edit', 'PostArticlesController@edit')->name('posts.articles.edit');
+    Route::put('/posts/{postId}/articles/{id}/update', 'PostArticlesController@update')->name('posts.articles.update');
     Route::delete('/articles/{id}', 'PostArticlesController@destroy');
+    // Articles - bulk delete, publish
+    Route::post('/articles/bulk-actions', 'PostArticlesController@bulkAction')->name('posts.articles.actions');
 });
 
 

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use App\Filters\ArticleFilters;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Article extends BaseModel
@@ -24,6 +26,22 @@ class Article extends BaseModel
     ];
 
     /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($article) {
+            $userId = me() ? me()->id : null;
+            $article->user_id = $article->last_user_id = $userId;
+            $article->published_at = Carbon::now();
+        });
+    }
+
+    /**
      * An article belongs to a post.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -31,6 +49,18 @@ class Article extends BaseModel
     public function post(): BelongsTo
     {
         return $this->belongsTo(Post::class);
+    }
+
+    /**
+     * Apply all relevant post filters.
+     *
+     * @param  Builder $query
+     * @param  PostFilters $filters
+     * @return Builder
+     */
+    public function scopeFilter($query, ArticleFilters $filters)
+    {
+        return $filters->apply($query);
     }
 
     public static function defaultAttributes($overrides = [])
@@ -45,17 +75,13 @@ class Article extends BaseModel
         return $this->video_url ? make_youtube_url($this->video_url) : '';
     }
 
-    public function imagePath(): string
-    {
-        return $this->picture ? 'images/articles/' . $this->picture : '';
-    }
-
     public function toArray()
     {
         return array_merge(parent::toArray(), [
-            'picture' => $this->imagePath(),
+            'picture' => $this->imageUrl(),
             'video_url' => $this->videoUrl(),
-            'published' => $this->isPublished()
+            'published' => $this->isPublished(),
+            'description' => html_entity_decode($this->description)
         ]);
     }
 }

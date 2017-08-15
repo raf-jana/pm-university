@@ -37,7 +37,7 @@
 
                             <div class="col-sm-8">
                                 <textarea class="form-control" name="summary">
-                                   {!!  !!} old('summary', $placement->summary) }}
+                                   {!!old('summary', $placement->summary)!!}
                                 </textarea>
                             </div>
                         </div>

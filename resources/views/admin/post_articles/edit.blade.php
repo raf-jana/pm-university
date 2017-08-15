@@ -23,18 +23,20 @@
             <div class="ibox">
                 <div class="ibox-title">
                     <div class="ibox-tools">
-                        <h5>Add A Post
+                        <h5>Add An Article
                         </h5>
-                        <a href="{{ route('posts.articles', ['id' => $id]) }}" class="btn btn-primary btn-xs">Back To
+                        <a href="{{ route('posts.articles', ['postId' => $postId,'id' => $id]) }}"
+                           class="btn btn-primary btn-xs">Back To
                             List</a>
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <form action="{{ route('posts.articles.store', ['id' => $id]) }}" method="post"
+                    <form action="{{ route('posts.articles.update', ['postId' => $postId,'id' => $id]) }}" method="post"
                           class="form-horizontal"
                           enctype="multipart/form-data">
+                        {{ method_field('PUT') }}
                         {{ csrf_field() }}
-                        <input type="hidden" name="post_id" value="{{ $id }}"/>
+                        <input type="hidden" name="post_id" value="{{ $postId }}"/>
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label required">Type</label>
@@ -42,19 +44,20 @@
                             <div class="col-sm-10">
                                 <select name="type" data-placeholder="Choose a Type..." class="chosen-select"
                                         tabindex="2">
-                                    <option value="">Select Type</option>
-                                    <option value="top-10" {{ (old("type") === 'top-10' ? "selected":"") }}>
+                                    <option value="">Select</option>
+                                    <option value="top-10" {{ (old("type", $article->type) === 'top-10' ? "selected":"") }}>
                                         Top-10
                                     </option>
-                                    <option value="videos" {{ (old("type") === 'videos' ? "selected":"") }}>Videos
+                                    <option value="videos" {{ (old("type", $article->type) === 'videos' ? "selected":"") }}>
+                                        Videos
                                     </option>
-                                    <option value="books" {{ (old("type") === 'books' ? "selected":"") }}>
+                                    <option value="books" {{ (old("type", $article->type) === 'books' ? "selected":"") }}>
                                         Books
                                     </option>
-                                    <option value="interviews" {{ (old("type") === 'interviews' ? "selected":"") }}>
+                                    <option value="interviews" {{ (old("type", $article->type) === 'interviews' ? "selected":"") }}>
                                         Interviews
                                     </option>
-                                    <option value="tools" {{ (old("type") === 'tools' ? "selected":"") }}>
+                                    <option value="tools" {{ (old("type", $article->type) === 'tools' ? "selected":"") }}>
                                         Tools
                                     </option>
                                 </select>
@@ -63,16 +66,19 @@
                         <div class="form-group"><label class="col-sm-2 control-label required">Title</label>
 
                             <div class="col-sm-10"><input name="title" type="text" class="form-control"
-                                                          value="{{ old('title') }}"></div>
+                                                          value="{{ old('title', $article->title) }}"></div>
                         </div>
                         <div class="form-group"><label class="col-sm-2 control-label required">Source URL</label>
 
                             <div class="col-sm-10"><input name="source_url" type="text" class="form-control"
-                                                          value="{{ old('source_url') }}"></div>
+                                                          value="{{ old('source_url', $article->source_url) }}"></div>
                         </div>
                         <div class="form-group"><label class="col-sm-2 control-label">Image</label>
 
                             <div class="col-sm-8">
+                                @if($article->imageUrl())
+                                    <img src="{{ $article->imageUrl() }}"><br/> <br/>
+                                @endif
                                 <input type="file" class="form-control" name="picture">
                             </div>
                         </div>
@@ -81,14 +87,14 @@
 
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="video_url"
-                                       value="{{ old('video_url') }}">
+                                       value="{{ old('video_url', $article->video_url) }}">
                             </div>
                         </div>
                         <div class="form-group"><label class="col-sm-2 control-label required">Description</label>
 
                             <div class="col-sm-10">
                                 <textarea id="description" name="description">
-                                    {{ old('description') }}
+                                    {{ old('description', $article->description) }}
                                 </textarea>
                             </div>
                         </div>

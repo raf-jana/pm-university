@@ -74,9 +74,9 @@
     <!--Articles-->
     <!--Category Tabs-->
     <tabs>
-        <tab name="TOP 10" :selected="true">
+        <tab name="LATEST" :selected="true">
         </tab>
-        <tab name="LATEST">
+        <tab name="TOP 10">
         </tab>
         <tab name="VIDEOS">
         </tab>
@@ -124,14 +124,10 @@
     <!--//Next Previous Section-->
 
     <!--Footer-->
-    @include("_footer")
+    @include("includes._footer")
             <!--//Footer-->
 
-    <!--Copy Rights-->
-    <div class="copyrights">
-        <p>© Looptabs | All rights reserved</p>
-    </div>
-    <!--//Copy Rights-->
+    @include('includes._copy_rights')
 </div>
 </div>
 
@@ -192,7 +188,7 @@
     });
 </script>
 <!-- GA script -->
-@include('_ga')
+@include('includes._ga')
         <!-- //GA script -->
 
 @yield('after_scripts')

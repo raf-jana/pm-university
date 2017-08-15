@@ -100,7 +100,7 @@ class PostsController extends Controller
     public function bulkAction(Request $request)
     {
         $action = $request->get('action_type');
-        $ids = $request->get('post');
+        $ids = $request->get('post_ids');
         $notification = $this->notification(ucfirst($action) . 'ed successfully', 'success');
 
         foreach ($ids as $id) {

@@ -33,11 +33,15 @@ class CreateArticlesTable extends Migration
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users');
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');;
 
             $table->foreign('post_id')
                 ->references('id')
-                ->on('posts');
+                ->on('posts')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');;
 
         });
     }
