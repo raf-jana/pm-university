@@ -15,7 +15,7 @@ class HomeController extends Controller
         $masterPosts = Post::published()->filterByType(Post::MASTER)->get($postsAttributes);
         $specializationPosts = Post::published()->filterByType(Post::SPECIALIZATION)->get($postsAttributes);
         $placements = Placement::published()->get(Placement::defaultAttributes());
-        $hoks = HallsOfKnowledge::published()->get(HallsOfKnowledge::defaultAttributes());
+        $hoks = HallsOfKnowledge::published()->get(HallsOfKnowledge::defaultAttributes())->take(3);
         return view('posts.index', compact(
             'bachelorePosts',
             'masterPosts',

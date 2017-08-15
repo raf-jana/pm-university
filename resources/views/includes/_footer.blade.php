@@ -25,6 +25,5 @@
                 <li class="social-icon gmail"><a href="#" target="_blank"></a></li>
             </ul>
         </div>
-
     </div>
 </footer>

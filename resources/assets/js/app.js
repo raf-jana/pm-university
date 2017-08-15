@@ -62,7 +62,7 @@ Vue.component('tab', {
     <h2><a :href="article.source_url" target="_blank">{{ article.title }}</a></h2>
 <div v-if="article.picture" class="image-box"><img :src="article.picture" />
     </div>
-    <p v-if="article.description">{{ article.description }}...</p>
+    <p v-html="article.description">...</p>
 <div class="article-footer">
     <a :href="article.source_url" target="_blank" class="read">Read</a>
     </div>

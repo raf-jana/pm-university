@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Storage;
 use App\Traits\Publishable;
+use App\Traits\Models\CarbonDates;
 use Illuminate\Database\Eloquent\Model;
 
 class BaseModel extends Model
 {
-    use Publishable;
+    use Publishable, CarbonDates;
 
     public function scopeRecent($query)
     {

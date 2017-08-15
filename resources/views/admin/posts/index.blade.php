@@ -84,6 +84,9 @@
                                 <button class="btn btn-rounded btn-warning btn-sm" type="button"
                                         onclick="post_action('publish');"><i class="fa fa-globe"></i> Publish
                                 </button>
+                                <button class="btn btn-rounded btn-alert btn-sm" type="button"
+                                        onclick="post_action('unpublish');"><i class="fa fa-globe"></i> Unpublish
+                                </button>
                                 <button class="btn btn-rounded btn-danger btn-sm" type="button"
                                         onclick="post_action('delete');"><i
                                             class="fa fa-trash"></i> Delete
@@ -112,7 +115,7 @@
                                 @foreach($posts as $post)
                                     <tr>
                                         <td>
-                                            <input type="checkbox" class="check i-checks" name="post[]"
+                                            <input type="checkbox" class="check i-checks" name="post_ids[]"
                                                    id="post_{{ $post->id }}" value="{{ $post->id }}">
                                         </td>
                                         <td>
@@ -196,7 +199,6 @@
                                 </tfoot>
                             </table>
                         @endif
-
                     </div>
                 </div>
             </form>

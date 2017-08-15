@@ -773,7 +773,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(9);
-module.exports = __webpack_require__(40);
+module.exports = __webpack_require__(36);
 
 
 /***/ }),
@@ -818,7 +818,7 @@ Vue.component('tabs', {
 });
 
 Vue.component('tab', {
-    template: '\n<div v-if="isActive">\n    <section class="inner-tab-content">\n    <div class="container">\n    <div id="top" class="detail-wrapper">\n        <!--Article block-->\n    <div v-for="article in articles" class="well">\n    <div class="media">\n    <div class="media-body">\n    <h2><a :href="article.source_url" target="_blank">{{ article.title }}</a></h2>\n<div v-if="article.picture" class="image-box"><img :src="article.picture" />\n    </div>\n    <p v-if="article.description">{{ article.description }}...</p>\n<div class="article-footer">\n    <a :href="article.source_url" target="_blank" class="read">Read</a>\n    </div>\n    </div>\n    </div>\n    </div>\n    <!--//Article block-->\n    <div v-if="hasMoreArticles" class="show-more" @click="loadMoreArticles">Show More\n</div>\n<div v-if="errorMessage" class="show-more">{{ errorMessage }}\n</div>\n</div>\n</div>\n</section>\n</div>\n',
+    template: '\n<div v-if="isActive">\n    <section class="inner-tab-content">\n    <div class="container">\n    <div id="top" class="detail-wrapper">\n        <!--Article block-->\n    <div v-for="article in articles" class="well">\n    <div class="media">\n    <div class="media-body">\n    <h2><a :href="article.source_url" target="_blank">{{ article.title }}</a></h2>\n<div v-if="article.picture" class="image-box"><img :src="article.picture" />\n    </div>\n    <p v-html="article.description">...</p>\n<div class="article-footer">\n    <a :href="article.source_url" target="_blank" class="read">Read</a>\n    </div>\n    </div>\n    </div>\n    </div>\n    <!--//Article block-->\n    <div v-if="hasMoreArticles" class="show-more" @click="loadMoreArticles">Show More\n</div>\n<div v-if="errorMessage" class="show-more">{{ errorMessage }}\n</div>\n</div>\n</div>\n</section>\n</div>\n',
     props: {
         name: { required: true },
         selected: { default: false }
@@ -41884,11 +41884,7 @@ module.exports = Vue$3;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */
+/* 36 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
