@@ -94,7 +94,7 @@
             <ul class="pm-list">
                 @foreach($masterPosts as $key => $post)
                     <li>
-                        <a class="{{class_active_post($key)}}" href="{{$post->slug}}">
+                        <a href="{{$post->slug}}">
                             <div class="media">
                                 <div class="media-left"><span class="pm-list-count">{{$key += 1}}.</span></div>
                                 <div class="media-body">{{$post->title}}</div>
@@ -118,7 +118,7 @@
             <ul class="specialisation-list">
                 @foreach($specializationPosts as $key => $post)
                     <li>
-                        <a class="{{class_active_post($key)}}" href="{{$post->slug}}">
+                        <a href="{{$post->slug}}">
                             <div>
                                 <img src="{{$post->imageUrl()}}"
                                      alt="{{$post->title}}"
@@ -145,7 +145,7 @@
                 <div class="row">
                     @foreach($hoks as $hok)
                         <div class="col-md-4">
-                            <a href="{{ $hok->link }}" target="_blank">
+                            <a href="{{ $hok->slug }}" target="_blank">
                                 <div class="k-list-item">
                                     <div class="list-image">
                                         <img src="{{asset($hok->imageUrl())}}"/>
@@ -188,7 +188,7 @@
                                 {{ $placement->summary }}
                             </div>
                             <div class="p-list-link">
-                                <a href="{{ $placement->link }}" target="_blank">Read more &raquo;</a>
+                                <a href="{{ $placement->slug }}" target="_blank">Read more &raquo;</a>
                             </div>
                         </div>
                     </div>

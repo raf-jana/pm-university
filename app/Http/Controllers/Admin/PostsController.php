@@ -18,10 +18,8 @@ class PostsController extends Controller
      */
     public function index(Request $request, PostFilters $filters)
     {
-        \DB::enableQueryLog();
         $posts = $this->getPosts($filters);
         $totalPosts = $posts->total();
-        //dd(\DB::getQueryLog());
         $posts->withPath(request()->getUri());
         $latestPost = Post::latest()->first();
         $oldestPost = Post::oldest()->first();
@@ -91,8 +89,8 @@ class PostsController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
-        $post->unpublish();
-        $post->articles->each->unpublish();
+        $post->delete();
+        $post->articles->each->delete();
         $notification = $this->notification('Deleted successfully', 'success');
         return redirect(route('posts'))->with($notification);
     }
@@ -105,9 +103,10 @@ class PostsController extends Controller
 
         foreach ($ids as $id) {
             $post = Post::find($id);
-            $method = $action === 'publish' ? 'publish' : 'unpublish';
-            $post->{$method}();
-            $post->articles->each->{$method}();
+            $post->{$action}();
+            if ($action !== 'publish') {
+                $post->articles->each->{$action}();
+            }
         }
         return redirect(route('posts'))->with($notification);
     }

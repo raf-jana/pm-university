@@ -33,14 +33,6 @@
                             class="nav-label">Dashboard</span> </a>
             </li>
             <li>
-                <a href="{{ route('placements') }}"><i class="fa fa-pie-chart"></i> <span
-                            class="nav-label">Placements</span> </a>
-            </li>
-            <li>
-                <a href="{{ route('hok') }}"><i class="fa fa-flask"></i> <span
-                            class="nav-label">Halls Of Knowledge</span></a>
-            </li>
-            <li>
                 <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Posts</span><span
                             class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">

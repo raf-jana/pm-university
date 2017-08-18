@@ -28,22 +28,6 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 Route::middleware('auth')->prefix('admin')->namespace('Admin')->group(function () {
     Route::get('/', 'PostsController@index')->name('dashboard');
     Route::get('dashboard', 'PostsController@index')->name('dashboard');
-    Route::resource('placements', 'PlacementsController', ['names' => [
-        'index' => 'placements',
-        'create' => 'placements.create',
-        'store' => 'placements.store',
-        'edit' => 'placements.edit',
-        'update' => 'placements.update',
-        'destroy' => 'placements.delete'
-    ]]);
-    Route::resource('hok', 'HallsOfKnowledgeController', ['names' => [
-        'index' => 'hok',
-        'create' => 'hok.create',
-        'store' => 'hok.store',
-        'edit' => 'hok.edit',
-        'update' => 'hok.update',
-        'destroy' => 'hok.delete',
-    ]]);
     Route::resource('posts', 'PostsController', ['names' => [
         'index' => 'posts',
         'create' => 'posts.create',
@@ -62,7 +46,8 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->group(function (
     Route::put('/posts/{postId}/articles/{id}/update', 'PostArticlesController@update')->name('posts.articles.update');
     Route::delete('/articles/{id}', 'PostArticlesController@destroy');
     // Articles - bulk delete, publish
-    Route::post('/articles/bulk-actions', 'PostArticlesController@bulkAction')->name('posts.articles.actions');
+    Route::post('/articles/bulk-actions', 'PostArticlesController@bulkAction')
+        ->name('posts.articles.actions');
 });
 
 
