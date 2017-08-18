@@ -74,9 +74,9 @@
     <!--Articles-->
     <!--Category Tabs-->
     <tabs>
-        <tab name="LATEST" :selected="true">
+        <tab name="TOP 10" :selected="true">
         </tab>
-        <tab name="TOP 10">
+        <tab name="LATEST">
         </tab>
         <tab name="VIDEOS">
         </tab>

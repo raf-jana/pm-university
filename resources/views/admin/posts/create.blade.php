@@ -27,32 +27,25 @@
                           enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Type:</label>
+                            <label class="col-sm-2 control-label required">Type</label>
 
                             <div class="col-sm-10">
                                 <select name="type" data-placeholder="Choose a Type..." class="chosen-select"
                                         tabindex="2">
-                                    <option value="">Select</option>
-                                    <option value="bachelore" {{ (old("type") == 'bachelore' ? "selected":"") }}>Bachelore
-                                    </option>
-                                    <option value="master" {{ (old("type") == 'master' ? "selected":"") }}>Master</option>
-                                    <option value="specialization" {{ (old("type") == 'specialization' ? "selected":"") }}>
-                                        Specialization
-                                    </option>
+                                    @include('admin.posts._type_select_tag_options', ['type' => old('type')])
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group"><label class="col-sm-2 control-label">Title:</label>
+                        <div class="form-group"><label class="col-sm-2 control-label required">Title</label>
 
                             <div class="col-sm-10"><input name="title" type="text" class="form-control"
                                                           value="{{ old('title') }}"></div>
                         </div>
-                        <div class="form-group"><label class="col-sm-2 control-label">Summary</label>
+                        <div class="form-group"><label class="col-sm-2 control-label required">Summary</label>
 
                             <div class="col-sm-10">
-                        <textarea class="form-control" name="summary">
-                            {{ old('summary') }}
-                        </textarea>
+                                <textarea class="form-control" name="summary" rows="2"
+                                          cols="50">{{old('summary')}}</textarea>
                             </div>
                         </div>
                         <div class="form-group"><label class="col-sm-2 control-label">Image</label>
@@ -62,13 +55,13 @@
                             </div>
                         </div>
 
-                        <div class="form-group"><label class="col-sm-2 control-label">Note Title:</label>
+                        <div class="form-group"><label class="col-sm-2 control-label required">Note Title</label>
 
                             <div class="col-sm-10"><input type="text" class="form-control" name="note_title"
                                                           placeholder="Note title" value="{{ old('note_title') }}">
                             </div>
                         </div>
-                        <div class="form-group"><label class="col-sm-2 control-label">Note Description:</label>
+                        <div class="form-group"><label class="col-sm-2 control-label required">Note Description</label>
 
                             <div class="col-sm-10">
                                 <textarea id="note_description" name="note_description">

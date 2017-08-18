@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="ibox-content text-center">
-                    <form action="{{ route('posts.articles', ['id' => $id]) }}" method="get">
+                    <form action="{{ route('posts.articles', ['id' => $post->id]) }}" method="get">
                         <div class="row">
                             <div class="col-sm-4 m-b-xs">
                                 @include('admin.includes._post_article_type_select_tag', ['type' => request('type')])
@@ -56,7 +56,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-4">
-                                <a class="btn btn-md btn-default" href="{{ route('posts.articles', ['id' => $id]) }}"
+                                <a class="btn btn-md btn-default" href="{{ route('posts.articles', ['id' => $post->id]) }}"
                                    style="float: left;background-color: #e7eaec;">
                                     Reset</a>
                             </div>
@@ -74,26 +74,30 @@
                 <div class="ibox">
                     <div class="ibox-title">
                         <div class="ibox-tools">
-                            <h5>Articles</h5>
-                            {{--<a href="{{ route('posts.articles.create', ['id' => $id]) }}" class="btn btn-primary btn-xs">Add
-                                new</a>--}}
-                            <a href="{{ route('posts.articles.create', ['id' => $id]) }}"
-                               class="btn btn-rounded btn-primary btn-sm"
-                               type="button"><i
-                                        class="fa fa-plus-circle"></i> Add New Article
+                            <h5>Articles - {{ $post->title }}</h5>
+                            <a href="{{ route('posts')}}" class="btn btn-sm">
+                                <i class="fa fa-arrow-circle-left"></i> Back To Posts
                             </a>
-                            <button class="btn btn-rounded btn-warning btn-sm" type="button"
+                            <a href="{{ route('posts.articles.create', ['id' => $post->id]) }}"
+                               class="btn btn-rounded btn-primary btn-sm"
+                               type="button" title="Add New Article"><i
+                                        class="fa fa-plus-circle"></i>
+                            </a>
+                            <button class="btn btn-rounded btn-primary btn-sm" type="button"
                                     onclick="article_action('publish');"><i class="fa fa-globe"></i> Publish
+                            </button>
+                            <button class="btn btn-rounded btn-warning btn-sm" type="button"
+                                    onclick="article_action('unpublish');"><i class="fa fa-globe"></i> Unpublish
                             </button>
                             <button class="btn btn-rounded btn-danger btn-sm" type="button"
                                     onclick="article_action('delete');"><i
                                         class="fa fa-trash"></i> Delete
                             </button>
                             <input type="hidden" name="action_type" id="action_type">
-                            <input type="hidden" name="post_id" value="{{ $id }}">
+                            <input type="hidden" name="post_id" value="{{ $post->id }}">
                         </div>
                     </div>
-                    <div class="ibox-content">
+                    <div class="ibox-content table-responsive">
                         @include('admin.includes._records_count_bs_alert', ['total' => $totalArticles, 'btn_class' => $totalArticles > 0 ? 'info' : 'danger'])
                         @if($totalArticles > 0)
                             <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
@@ -101,7 +105,7 @@
                                 <tr>
                                     <th style="width:5%;"><input type="checkbox" id="check_all" class="i-checks"/>
                                     </th>
-                                    <th>#</th>
+                                    <th>Seq</th>
                                     <th data-hide="phone">Title</th>
                                     <th data-hide="phone">Type</th>
                                     <th data-hide="phone">Posted On</th>
@@ -118,7 +122,7 @@
                                                    id="article_{{ $article->id }}" value="{{ $article->id }}">
                                         </td>
                                         <td>
-                                            {{$article->id}}
+                                            {{$article->sequence}}
                                         </td>
                                         <td>
                                             {{$article->title}}

@@ -28,7 +28,9 @@
                     <form action="{{ route('posts') }}" method="get">
                         <div class="row">
                             <div class="col-sm-4 m-b-xs">
-                                @include('admin.includes._post_type_select_tag', ['type' => request('type')])
+                                <select class="input-md  form-control input-s-sm inline" name="type">
+                                    @include('admin.posts._type_select_tag_options', ['type' => request('type')])
+                                </select>
                             </div>
                             <div class="col-sm-4 m-b-xs">
                                 <select class="input-md  form-control input-s-sm inline" name="status">
@@ -78,13 +80,13 @@
 
                             <div class="ibox-tools">
                                 <a href="{{ route('posts.create') }}" class="btn btn-rounded btn-primary btn-sm"
-                                   type="button"><i
-                                            class="fa fa-plus-circle"></i> Add New Post
+                                   type="button" title="Add New Post"><i
+                                            class="fa fa-plus-circle"></i>
                                 </a>
-                                <button class="btn btn-rounded btn-warning btn-sm" type="button"
+                                <button class="btn btn-rounded btn-warning btn-sm" type="button" title="Publish"
                                         onclick="post_action('publish');"><i class="fa fa-globe"></i> Publish
                                 </button>
-                                <button class="btn btn-rounded btn-alert btn-sm" type="button"
+                                <button class="btn btn-rounded btn-alert btn-sm" type="button" title="Unpublish"
                                         onclick="post_action('unpublish');"><i class="fa fa-globe"></i> Unpublish
                                 </button>
                                 <button class="btn btn-rounded btn-danger btn-sm" type="button"
@@ -95,7 +97,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="ibox-content">
+                    <div class="ibox-content table-responsive">
                         @include('admin.includes._records_count_bs_alert', ['total' => $totalPosts, 'btn_class' => $totalPosts > 0 ? 'info' : 'danger'])
                         @if($totalPosts > 0)
                             <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">

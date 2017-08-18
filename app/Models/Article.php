@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Article extends BaseModel
 {
+    const LATEST = 'latest';
     const TOP_TEN = 'top-10';
     const VIDEOS = 'videos';
     const BOOKS = 'books';
@@ -52,10 +53,10 @@ class Article extends BaseModel
     }
 
     /**
-     * Apply all relevant post filters.
+     * Apply all relevant article filters.
      *
      * @param  Builder $query
-     * @param  PostFilters $filters
+     * @param  ArticleFilters $filters
      * @return Builder
      */
     public function scopeFilter($query, ArticleFilters $filters)
