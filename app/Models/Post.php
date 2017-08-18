@@ -12,6 +12,8 @@ class Post extends BaseModel
 {
     use HasSlug, CarbonDates;
 
+    const PLACEMENTS = 'placements';
+    const HOK = 'hok';
     const BACHELORE = 'bachelore';
     const MASTER = 'master';
     const SPECIALIZATION = 'specialization';
@@ -43,7 +45,7 @@ class Post extends BaseModel
         });
     }
 
-    public function scopeFilterByType($query, $type)
+    public function scopeType($query, $type)
     {
         return $query->latest()->where('type', $type);
     }

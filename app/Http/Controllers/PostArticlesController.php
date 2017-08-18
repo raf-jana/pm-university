@@ -11,10 +11,10 @@ class PostArticlesController extends AjaxController
     {
         $type = request('type', 'latest');
         $articles = $this->getArticles($id, $type);
-
-        if ($articles->total() === 0) {
+        if (($type === 'top-10' && request('page') > 1) OR $articles->total() === 0) {
             return $this->respondNotFound('No records found');
         }
+
         $formattedArticles = [];
         foreach ($articles as $key => $article) {
             $formattedArticles[$key] = $article->toArray();
@@ -26,29 +26,9 @@ class PostArticlesController extends AjaxController
     {
         $post = Post::find($postId);
         $perPage = ( int )request('perPage', 5);
-        $postArticles = $post->articles();
-        if ($type === 'latest') {
-            $postArticles->latest();
-        } else {
-            $postArticles->where('type', $type);
-        }
-        return $postArticles->paginate($perPage, Article::defaultAttributes());
-    }
-
-    public function getType()
-    {
-        $type = request('type', 'latest');
-        if ($type === 'top-10') {
-            $type = 1;
-        } elseif ($type === 'videos') {
-            $type = 2;
-        } elseif ($type === 'books') {
-            $type = 3;
-        } elseif ($type === 'interviews') {
-            $type = 4;
-        } elseif ($type === 'videos') {
-            $type = 2;
-        }
-        return $type;
+        return $post->articles()
+            ->orderBy('sequence', 'desc')
+            ->where('type', $type)
+            ->paginate($perPage, Article::defaultAttributes());
     }
 }

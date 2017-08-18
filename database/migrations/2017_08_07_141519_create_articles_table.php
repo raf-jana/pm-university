@@ -25,6 +25,11 @@ class CreateArticlesTable extends Migration
             $table->string('video_url')->nullable();
             $table->unsignedInteger('user_id')->nullable();
             $table->unsignedInteger('last_user_id')->nullable();
+            $table->string('author_name')->nullable();
+            $table->string('author_organization')->nullable();
+            $table->string('author_designation')->nullable();
+            $table->string('author_location')->nullable();
+            $table->unsignedMediumInteger('sequence')->default(0)->nullable();
             $table->dateTime('published_at')->nullable()->index();
             $table->timestamps();
 

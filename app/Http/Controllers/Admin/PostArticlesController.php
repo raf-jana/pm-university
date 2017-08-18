@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Article;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Filters\ArticleFilters;
 use App\Http\Controllers\Controller;
@@ -21,8 +22,12 @@ class PostArticlesController extends Controller
     {
         $articles = $this->getArticles($id, $filters);
         $totalArticles = $articles->total();
+        $post = $totalArticles > 0
+            ? $articles->first()->post
+            : Post::find($id, Post::defaultAttributes());
+
         $articles->withPath(request()->getUri());
-        return view('admin.post_articles.index', compact('id', 'articles', 'totalArticles'));
+        return view('admin.post_articles.index', compact('post', 'articles', 'totalArticles'));
     }
 
     /**
@@ -58,7 +63,7 @@ class PostArticlesController extends Controller
      */
     public function edit($postId, $id)
     {
-        $article = Article::find($id);
+        $article = Article::find($id, $this->_formAttributes());
         return view('admin.post_articles.edit', compact('postId', 'id', 'article'));
     }
 
@@ -72,11 +77,12 @@ class PostArticlesController extends Controller
      */
     public function update(Request $request, $postId, $id)
     {
-        $article = Article::find($id);
+        $article = Article::find($id, $this->_formAttributes());
         $data = $this->_validateInput();
         $article->update($data);
         $notification = $this->notification('Saved successfully', 'success');
-        return redirect(route('posts.articles', ['id' => $data['post_id']]))->with($notification);
+        return redirect(route('posts.articles', ['id' => $postId]) . '?type=' . $article->type)
+            ->with($notification);
     }
 
     /**
@@ -88,7 +94,7 @@ class PostArticlesController extends Controller
     public function destroy($id)
     {
         $article = Article::find($id);
-        $article->unpublish();
+        $article->delete();
         $notification = $this->notification('Deleted successfully', 'success');
         return redirect(route('posts.articles', ['id' => $article->post_id]))->with($notification);
     }
@@ -100,8 +106,7 @@ class PostArticlesController extends Controller
         $notification = $this->notification(ucfirst($action) . 'ed successfully', 'success');
         foreach ($ids as $id) {
             $post = Article::find($id);
-            $method = $action === 'publish' ? 'publish' : 'unpublish';
-            $post->{$method}();
+            $post->{$action}();
         }
         return redirect(route('posts.articles', ['id' => $request->get('post_id')]))->with($notification);
     }
@@ -118,7 +123,7 @@ class PostArticlesController extends Controller
         return Article::where('post_id', $postId)
             ->recent()
             ->filter($filters)
-            ->paginate(15, Article::defaultAttributes(['post_id', 'type', 'created_at']));
+            ->paginate(15, Article::defaultAttributes(['post_id', 'type', 'sequence', 'created_at']));
     }
 
     private function _validateInput()
@@ -128,20 +133,42 @@ class PostArticlesController extends Controller
             'type' => 'required',
             'title' => 'required|max:150',
             'picture' => 'sometimes|image|mimes:jpeg,png,jpg,gif',
-            'video_url' => 'required_if:type,videos',
+            'video_url' => 'sometimes',
             'source_url' => 'required|url',
-            'description' => 'sometimes'
+            'description' => 'sometimes',
+            'sequence' => 'required',
+            'author_name' => 'sometimes',
+            'author_organization' => 'sometimes',
+            'author_designation' => 'sometimes',
+            'author_location' => 'sometimes'
         ]);
         if (request()->hasFile('picture'))
             $data['picture'] = request()->file('picture')->store('images', 'public');
 
-        $filters = [
+        $filters = $this->_sanitizeFilters();
+        return \Sanitizer::make($data, $filters)->sanitize();
+    }
+
+    protected function _sanitizeFilters()
+    {
+        return [
             'title' => 'strip_tags|trim|capitalize_first_letter',
-            'note_description' => 'trim|capitalize_first_letter',
+            'description' => 'trim|capitalize_first_letter',
             'source_url' => 'strip_tags|trim|lowercase',
-            'video_url' => 'strip_tags|trim|lowercase'
+            'video_url' => 'strip_tags|trim|lowercase',
+            'author_name' => 'strip_tags|trim|titleize',
+            'author_organization' => 'strip_tags|trim|titleize',
+            'author_designation' => 'strip_tags|trim|titleize',
+            'author_location' => 'strip_tags|trim|titleize'
 
         ];
-        return \Sanitizer::make($data, $filters)->sanitize();
+    }
+
+    protected function _formAttributes()
+    {
+        return Article::defaultAttributes(
+            ['type', 'author_name', 'author_organization', 'author_designation',
+                'author_location', 'sequence'
+            ]);
     }
 }

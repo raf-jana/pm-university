@@ -10,7 +10,13 @@
     <link rel="shortcut icon" href="{{asset('favicon.ico')}}">
     <title>{{ fullTitle() }}</title>
     @include('admin.includes._styles')
-            <!-- Scripts -->
+    <style>
+        .required:after {
+            color: red;
+            content: ' *';
+        }
+    </style>
+    <!-- Scripts -->
     <script>
         window.Language = '{{ app()->getLocale() }}';
         window.Laravel = <?php echo json_encode([
